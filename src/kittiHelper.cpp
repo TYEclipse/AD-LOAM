@@ -36,7 +36,7 @@ std::vector<float> read_lidar_data(const std::string lidar_data_path)
 
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "kitti_helper");
+    ros::init(argc, argv, "kittiHelper");
     ros::NodeHandle n("~");
     std::string dataset_folder, sequence_number, output_bag_file;
     n.getParam("dataset_folder", dataset_folder);
@@ -45,6 +45,7 @@ int main(int argc, char** argv)
     bool to_bag;
     n.getParam("to_bag", to_bag);
     if (to_bag)
+        //output_bag_file = "/media/tyin/my_passport/dataset/KITTI/kitti-odometry/kitti.bag";
         n.getParam("output_bag_file", output_bag_file);
     int publish_delay;
     n.getParam("publish_delay", publish_delay);
@@ -129,8 +130,9 @@ int main(int argc, char** argv)
 
         // read lidar point cloud
         std::stringstream lidar_data_path;
-        lidar_data_path << dataset_folder << "velodyne/sequences/" + sequence_number + "/velodyne/" 
+        lidar_data_path << dataset_folder << "sequences/" + sequence_number + "/velodyne/"
                         << std::setfill('0') << std::setw(6) << line_num << ".bin";
+        std::cout<<"lidar_data_path : "<<lidar_data_path.str()<<std::endl;
         std::vector<float> lidar_data = read_lidar_data(lidar_data_path.str());
         std::cout << "totally " << lidar_data.size() / 4.0 << " points in this lidar frame \n";
 

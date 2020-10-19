@@ -40,7 +40,7 @@
 
 #include <pcl/point_types.h>
 
-typedef pcl::PointXYZI PointType;
+using PointType = pcl::PointXYZINormal;
 
 inline double rad2deg(double radians)
 {
@@ -51,3 +51,53 @@ inline double deg2rad(double degrees)
 {
   return degrees * M_PI / 180.0;
 }
+
+template <typename T>
+class Accumulator
+{
+private:
+    T m = 0;
+    T s = 0;
+    T N = 0;
+    T minx = 0;
+    T maxx = 0;
+public:
+    void addDateValue(T x)
+    {
+        if(N<1)
+        {
+          minx = x;
+          maxx = x;
+        }
+        N++;
+        s=s+(N-1)/N*(x-m)*(x-m);
+        m=m+(x-m)/N;
+        if(x<minx) minx = x;
+        if(x>maxx) maxx = x;
+    }
+    T mean()
+    {
+        return  m;
+    }
+    T var()
+    {
+        return s/(N-1);
+    }
+    T stddev()
+    {
+        return sqrt(var());
+    }
+    T min()
+    {
+        return minx;
+    }
+    T max()
+    {
+        return maxx;
+    }
+    T distribution(T x)
+    {
+      x = (x-m)/stddev()*M_SQRT1_2;
+      return (erf(x)+1)/2;
+    }
+};

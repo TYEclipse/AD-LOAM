@@ -16,27 +16,42 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   cv_bridge
   tf
+  message_generation
 )
 
-#find_package(Eigen3 REQUIRED)
+find_package(Eigen3 REQUIRED)
 find_package(PCL REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Ceres REQUIRED)
 
-include_directories(
-  include
-	${catkin_INCLUDE_DIRS} 
-	${PCL_INCLUDE_DIRS}
-  ${CERES_INCLUDE_DIRS}
-  ${OpenCV_INCLUDE_DIRS})
+add_message_files(
+  FILES
+  Cluster.msg
+  ClusterArray.msg
+  Track.msg
+  TrackArray.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  geometry_msgs
+)
 
 catkin_package(
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy std_msgs
-  DEPENDS EIGEN3 PCL 
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy std_msgs message_runtime
+  DEPENDS EIGEN3 PCL
   INCLUDE_DIRS include
 )
 
-
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS} 
+  ${PCL_INCLUDE_DIRS}
+  ${CERES_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+)
+  
 add_executable(ascanRegistration src/scanRegistration.cpp)
 target_link_libraries(ascanRegistration ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 

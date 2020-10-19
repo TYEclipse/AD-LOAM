@@ -74,8 +74,8 @@ double timeSurfPointsFlat = 0;
 double timeSurfPointsLessFlat = 0;
 double timeLaserCloudFullRes = 0;
 
-pcl::KdTreeFLANN<pcl::PointXYZI>::Ptr kdtreeCornerLast(new pcl::KdTreeFLANN<pcl::PointXYZI>());
-pcl::KdTreeFLANN<pcl::PointXYZI>::Ptr kdtreeSurfLast(new pcl::KdTreeFLANN<pcl::PointXYZI>());
+pcl::KdTreeFLANN<PointType>::Ptr kdtreeCornerLast(new pcl::KdTreeFLANN<PointType>());
+pcl::KdTreeFLANN<PointType>::Ptr kdtreeSurfLast(new pcl::KdTreeFLANN<PointType>());
 
 pcl::PointCloud<PointType>::Ptr cornerPointsSharp(new pcl::PointCloud<PointType>());
 pcl::PointCloud<PointType>::Ptr cornerPointsLessSharp(new pcl::PointCloud<PointType>());
@@ -126,6 +126,11 @@ void TransformToStart(PointType const *const pi, PointType *const po)
     po->y = un_point.y();
     po->z = un_point.z();
     po->intensity = pi->intensity;
+
+    po->normal_x = pi->normal_x;
+    po->normal_y = pi->normal_z;
+    po->normal_z = pi->normal_z;
+    po->curvature = pi->curvature;
 }
 
 // transform all lidar points to the start of the next frame
@@ -133,7 +138,7 @@ void TransformToStart(PointType const *const pi, PointType *const po)
 void TransformToEnd(PointType const *const pi, PointType *const po)
 {
     // undistort point first
-    pcl::PointXYZI un_point_tmp;
+    PointType un_point_tmp;
     TransformToStart(pi, &un_point_tmp);
 
     Eigen::Vector3d un_point(un_point_tmp.x, un_point_tmp.y, un_point_tmp.z);
@@ -145,6 +150,11 @@ void TransformToEnd(PointType const *const pi, PointType *const po)
 
     //Remove distortion time info
     po->intensity = int(pi->intensity);
+
+    po->normal_x = pi->normal_x;
+    po->normal_y = pi->normal_z;
+    po->normal_z = pi->normal_z;
+    po->curvature = pi->curvature;
 }
 
 void laserCloudSharpHandler(const sensor_msgs::PointCloud2ConstPtr &cornerPointsSharp2)
@@ -290,7 +300,7 @@ int main(int argc, char **argv)
                     problem.AddParameterBlock(para_q, 4, q_parameterization);
                     problem.AddParameterBlock(para_t, 3);
 
-                    pcl::PointXYZI pointSel;
+                    PointType pointSel;
                     std::vector<int> pointSearchInd;
                     std::vector<float> pointSearchSqDis;
 

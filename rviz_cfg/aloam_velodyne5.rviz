@@ -213,9 +213,9 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 1.7300000190734863
+          Max Intensity: 5
           Min Color: 0; 0; 0
-          Min Intensity: -1.7300000190734863
+          Min Intensity: -0.5
           Name: allMapCloud
           Position Transformer: XYZ
           Queue Size: 10
@@ -273,9 +273,9 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 63.123146057128906
+          Max Intensity: 14.100000381469727
           Min Color: 0; 0; 0
-          Min Intensity: 0.035942722111940384
+          Min Intensity: 1
           Name: currPoints
           Position Transformer: XYZ
           Queue Size: 10
@@ -666,7 +666,53 @@ Visualization Manager:
         All Enabled: true
         aft_mapped:
           Value: true
+        base_link:
+          Value: true
+        camera:
+          Value: true
         camera_init:
+          Value: true
+        chassis_link:
+          Value: true
+        fenders_link:
+          Value: true
+        front_left_wheel_link:
+          Value: true
+        front_mount:
+          Value: true
+        front_right_wheel_link:
+          Value: true
+        imu_link:
+          Value: true
+        laser_odom:
+          Value: true
+        map:
+          Value: true
+        mid_mount:
+          Value: true
+        navsat_link:
+          Value: true
+        odom:
+          Value: true
+        rear_bridge:
+          Value: true
+        rear_left_wheel_link:
+          Value: true
+        rear_mount:
+          Value: true
+        rear_navsat:
+          Value: true
+        rear_right_wheel_link:
+          Value: true
+        rear_standoff0:
+          Value: true
+        rear_standoff1:
+          Value: true
+        rear_standoff2:
+          Value: true
+        rear_standoff3:
+          Value: true
+        velodyne:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -674,9 +720,47 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        camera_init:
-          aft_mapped:
-            {}
+        map:
+          odom:
+            camera_init:
+              aft_mapped:
+                base_link:
+                  chassis_link:
+                    fenders_link:
+                      {}
+                    front_left_wheel_link:
+                      {}
+                    front_right_wheel_link:
+                      {}
+                    imu_link:
+                      {}
+                    mid_mount:
+                      front_mount:
+                        {}
+                      rear_mount:
+                        rear_bridge:
+                          rear_navsat:
+                            {}
+                        rear_standoff0:
+                          {}
+                        rear_standoff1:
+                          {}
+                        rear_standoff2:
+                          {}
+                        rear_standoff3:
+                          {}
+                      velodyne:
+                        {}
+                    navsat_link:
+                      {}
+                    rear_left_wheel_link:
+                      {}
+                    rear_right_wheel_link:
+                      {}
+              camera:
+                {}
+              laser_odom:
+                {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -707,25 +791,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 100
+      Distance: 35
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 40
-        Y: 0
-        Z: -20
+        X: 22
+        Y: 6.300000190734863
+        Z: 11
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7853000164031982
+      Pitch: 0.6299999952316284
       Target Frame: camera_init
       Value: Orbit (rviz)
-      Yaw: 3.1415998935699463
+      Yaw: 1.2999999523162842
     Saved: ~
 Window Geometry:
   Displays:
